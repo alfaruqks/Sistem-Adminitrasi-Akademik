@@ -91,13 +91,36 @@ class TagihanPembayaranController extends Controller
 
         if ($request->hasFile('bukti_pembayaran')) {
             $filePath = $request->file('bukti_pembayaran')->store('bukti_pembayaran', 'public');
+            
             $tagihan->update([
                 'bukti_pembayaran' => $filePath,
-                'status' => 'Lunas',
+                'status' => 'Belum Lunas',
             ]);
         }
 
         return redirect()->route('murid.kesiswaan.informasi-tagihan.index')->with('success', 'Bukti pembayaran berhasil diupload.');
     }
+
+    // Murid Menghapus Bukti Pembayaran
+    public function deleteBukti($id)
+    {
+        $tagihan = TagihanPembayaran::where('id', $id)
+                    ->where('murid_id', auth()->id())
+                    ->firstOrFail();
+
+        // Hapus file dari storage jika ada
+        if ($tagihan->bukti_pembayaran && Storage::disk('public')->exists($tagihan->bukti_pembayaran)) {
+            Storage::disk('public')->delete($tagihan->bukti_pembayaran);
+        }
+
+        // Set kolom ke null
+        $tagihan->update([
+            'bukti_pembayaran' => null,
+            'status' => 'Belum Lunas',
+        ]);
+
+        return redirect()->route('murid.kesiswaan.informasi-tagihan.index')->with('success', 'Bukti pembayaran berhasil dihapus.');
+    }
+
 
 }

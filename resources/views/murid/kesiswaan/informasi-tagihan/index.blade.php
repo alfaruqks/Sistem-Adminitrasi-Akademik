@@ -38,6 +38,11 @@
                                         <button type="submit" class="btn btn-sm btn-primary">Upload</button>
                                     </form>
                                 @else
+                                    <form action="{{ route('murid.kesiswaan.informasi-tagihan.delete', $t->id) }}" method="POST" style="display:inline;"onsubmit="return confirm('Yakin ingin menghapus bukti pembayaran?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Hapus</button>
+                                    </form>
                                     <a href="{{ asset('storage/'.$t->bukti_pembayaran) }}" target="_blank" class="btn btn-sm btn-info">Lihat</a>
                                 @endif
                             </td>
@@ -48,3 +53,5 @@
         </div>
     </div>
 @stop
+
+

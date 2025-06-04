@@ -93,6 +93,7 @@ Route::middleware(['auth', 'role:kurikulum'])->group(function () {
 Route::middleware(['auth', 'role:murid'])->group(function () {
     Route::get('/murid/kesiswaan/informasi-tagihan', [TagihanPembayaranController::class, 'indexMurid'])->name('murid.kesiswaan.informasi-tagihan.index');
     Route::post('/murid/kesiswaan/informasi-tagihan/upload/{id}', [TagihanPembayaranController::class, 'uploadBukti'])->name('murid.kesiswaan.informasi-tagihan.upload');
+    Route::delete('/murid/kesiswaan/informasi-tagihan/delete/{id}', [TagihanPembayaranController::class, 'deleteBukti'])->name('murid.kesiswaan.informasi-tagihan.delete');
 });
 
 // Kelas
