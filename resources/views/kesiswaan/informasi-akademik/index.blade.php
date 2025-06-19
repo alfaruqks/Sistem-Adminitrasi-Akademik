@@ -35,7 +35,7 @@
                         <td class="text-center">
                             @if ($i->file_pdf)
                                 <a href="{{ asset('storage/' . $i->file_pdf) }}" class="btn btn-info btn-sm" target="_blank">
-                                    <i class="fas fa-file-pdf"></i> Lihat PDF
+                                    <i class="fas fa-file-pdf"></i> Lihat
                                 </a>
                             @else
                                 <span class="text-muted">Tidak ada file</span>

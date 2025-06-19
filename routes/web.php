@@ -100,13 +100,29 @@ Route::middleware(['auth', 'role:murid'])->group(function () {
 Route::middleware(['auth', 'role:kurikulum'])->group(function () {
     Route::prefix('akademik')->name('akademik.')->group(function () {
         Route::resource('kelas', KelasController::class);
+        
+        Route::prefix('kelas/{kelas}')->group(function () {
+            Route::get('murid', [KelasController::class, 'showMurid'])->name('kelas.show-murid');
+            Route::post('murid', [KelasController::class, 'tambahMurid'])->name('kelas.tambah-murid');
+            Route::delete('murid/{murid}', [KelasController::class, 'hapusMurid'])->name('kelas.hapus-murid');
+        });
     });
 });
+
+
 Route::middleware(['auth', 'role:guru'])->group(function () {
-    Route::get('guru/kelas', [KelasController::class, 'index'])->name('guru.kelas.index');
+    Route::prefix('guru')->name('guru.')->group(function () {
+        Route::get('kelas', [KelasController::class, 'index'])->name('kelas.index');
+        Route::get('kelas/{kelas}/murid', [KelasController::class, 'showMurid'])->name('kelas.show-murid');
+    });
 });
+
+
 Route::middleware(['auth', 'role:murid'])->group(function () {
-    Route::get('murid/kelas', [KelasController::class, 'index'])->name('murid.kelas.index');
+    Route::prefix('murid')->name('murid.')->group(function () {
+        Route::get('kelas', [KelasController::class, 'index'])->name('kelas.index');
+        Route::get('kelas/{kelas}/murid', [KelasController::class, 'showMurid'])->name('kelas.show-murid');
+    });
 });
 
 // Nilai

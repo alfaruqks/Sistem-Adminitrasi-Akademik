@@ -9,15 +9,20 @@ class kelas extends Model
 {
     use HasFactory;
     protected $table = 'kelas'; // Sesuai dengan nama tabel di database
-    protected $fillable = ['nama_kelas','murid_id','guru_id'];
+    protected $fillable = ['nama_kelas','guru_id'];
     
-    public function murid()
+     public function guru()
     {
-        return $this->belongsTo(User::class, 'murid_id');
+        return $this->belongsTo(User::class, 'guru_id');
     }
 
-    Public function guru()
+    public function murids()
     {
-        return $this->belongsTo(User::class, 'guru_id'); // Relasi guru_id ke user
+        return $this->belongsToMany(
+            User::class,
+            'kelas_murid',
+            'kelas_id',
+            'murid_id'
+        );
     }
 }

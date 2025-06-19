@@ -38,24 +38,31 @@
 
                 <div class="form-group mt-3">
                     <label for="murid_id">Pilih Murid</label>
-                    <select name="murid_id" class="form-control" required>
-                        <option value="">-- Pilih Murid --</option>
+                    <div class="border rounded p-2" style="max-height: 300px; overflow-y: auto;">
                         @foreach($murids as $murid)
-                            <option value="{{ $murid->id }}" 
-                                {{ $murid->id == $kelas->murid_id ? 'selected' : '' }}>
-                                {{ $murid->name }}
-                            </option>
+                            <div class="form-check">
+                                <input 
+                                    class="form-check-input" 
+                                    type="checkbox" 
+                                    name="murid_id[]" 
+                                    value="{{ $murid->id }}"id="murid_{{ $murid->id }}"{{ isset($kelas) && $kelas->murids->contains($murid->id) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="murid_{{ $murid->id }}">
+                                    {{ $murid->name }}
+                                </label>
+                            </div>
                         @endforeach
-                    </select>
-
-                   
+                    </div>
+                    <small class="text-muted">Pilih satu atau lebih murid dari daftar.</small>
                     @error('murid_id')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
+
+                
+
                 <div class="mt-4">
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Update</button>
+                    <button type="submit" class="btn btn-primary"></i> Simpan</button>
                     <a href="{{ route('akademik.kelas.index') }}" class="btn btn-secondary">Kembali</a>
                 </div>
             </form>

@@ -6,19 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
         Schema::create('kelas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('guru_id')->constrained('users')->onDelete('cascade'); // relasi ke guru
-            $table->foreignId('murid_id')->unique()->constrained('users')->onDelete('cascade'); // relasi ke murid (one-to-one)
+            // relasi ke tabel users (guru)
+            $table->foreignId('guru_id')->constrained('users')->onDelete('cascade');
             $table->string('nama_kelas');
             $table->timestamps();
         });
     }
 
-    public function down()
-    {
+    public function down(): void{
         Schema::dropIfExists('kelas');
     }
 };

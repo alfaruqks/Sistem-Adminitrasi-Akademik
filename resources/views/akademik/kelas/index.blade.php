@@ -1,4 +1,3 @@
-
 @extends('adminlte::page')
 
 @section('title', 'Jadwal Pelajaran')
@@ -11,12 +10,13 @@
     <div class="card">
         <div class="card-header">
             @if(Auth::user()->role === 'kurikulum')
-                <a href="{{ route('akademik.kelas.create') }}" class="btn btn-primary"> <i class="fas fa-plus-circle"></i> Tambah </a>
+                <a href="{{ route('akademik.kelas.create') }}" class="btn btn-primary">
+                    <i class="fas fa-plus-circle"></i> Tambah
+                </a>
             @endif
         </div>
 
         <div class="card-body">
-
             <table class="table table-bordered table-striped">
                 <thead class="text-center">
                     <tr>
@@ -24,7 +24,7 @@
                         <th>Nama Kelas</th>
                         <th>Wali Kelas</th>
                         <th>Daftar Murid</th>
-                        @if(Auth::user()->role === 'kurikulum')      
+                        @if(Auth::user()->role === 'kurikulum')
                             <th>Aksi</th>
                         @endif
                     </tr>
@@ -36,13 +36,21 @@
                             <td class="text-center">{{ $data->nama_kelas }}</td>
                             <td class="text-center">{{ $data->guru->name ?? '-' }}</td>
                             <td class="text-center">
-                                 @if($data->murid)
-                                    {{ $data->murid->name }}
-                                @else
-                                    <em>Belum ada murid</em>
-                                @endif
+                                    @if(Auth::user()->role === 'kurikulum')
+                                        <a href="{{ route('akademik.kelas.show-murid', $data->id) }}" class="btn btn-sm btn-info">
+                                            <i class="fas fa-users"></i> Kelola
+                                        </a>
+                                    @elseif(Auth::user()->role === 'guru')
+                                        <a href="{{ route('guru.kelas.show-murid', $data->id) }}" class="btn btn-sm btn-info">
+                                            <i class="fas fa-users"></i> Lihat
+                                        </a>
+                                    @else
+                                        <a href="{{ route('murid.kelas.show-murid', $data->id) }}" class="btn btn-sm btn-info">
+                                            <i class="fas fa-users"></i> Lihat
+                                        </a>
+                                    @endif
                             </td>
-                            @if(Auth::user()->role === 'kurikulum') 
+                            @if(Auth::user()->role === 'kurikulum')
                                 <td>
                                     <a href="{{ route('akademik.kelas.edit', $data->id) }}" class="btn btn-warning btn-sm">
                                         <i class="fas fa-edit"></i> Edit

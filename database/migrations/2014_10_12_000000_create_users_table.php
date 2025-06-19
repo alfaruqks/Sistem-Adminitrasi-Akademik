@@ -31,8 +31,12 @@ return new class extends Migration
      *
      * @return void
      */
+
+    // Jika user adalah murid
+    
     public function down()
     {
         Schema::dropIfExists('users');
     }
+    
 };

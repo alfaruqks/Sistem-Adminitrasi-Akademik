@@ -27,14 +27,26 @@
                     </select>
                 </div>
 
-                <div class="form-group">
-                    <label for="murid_id">Murid</label>
-                    <select name="murid_id" class="form-control" required>
-                        <option value="">-- Pilih Murid --</option>
+                <div class="form-group mt-3">
+                    <label for="murid_id">Pilih Murid</label>
+                    <div class="border rounded p-2" style="max-height: 300px; overflow-y: auto;">
                         @foreach($murids as $murid)
-                            <option value="{{ $murid->id }}">{{ $murid->name }}</option>
+                            <div class="form-check">
+                                <input 
+                                    class="form-check-input" 
+                                    type="checkbox" 
+                                    name="murid_id[]" 
+                                    value="{{ $murid->id }}"id="murid_{{ $murid->id }}"{{ isset($kelas) && $kelas->murids->contains($murid->id) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="murid_{{ $murid->id }}">
+                                    {{ $murid->name }}
+                                </label>
+                            </div>
                         @endforeach
-                    </select>
+                    </div>
+                    <small class="text-muted">Pilih satu atau lebih murid dari daftar.</small>
+                    @error('murid_id')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <button type="submit" class="btn btn-primary">Simpan</button>

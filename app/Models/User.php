@@ -43,4 +43,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // jika user berperan sebagai guru
+    public function kelasYangDiajar(){
+        return $this->hasMany(Kelas::class, 'guru_id');
+    }
+
+    // jika user berperan sebagai murid
+    public function kelas(){
+        return $this->belongsToMany(
+            Kelas::class,
+            'kelas_murid',
+            'murid_id',
+            'kelas_id'
+        );
+    }
 }
